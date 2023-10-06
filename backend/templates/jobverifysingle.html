@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+{% extends 'adminhome.html' %}
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="{% static 'icons/logo.ico' %}" type="image/x-icon"/>
+    <title>finder | Admin</title>
+</head>
+<body>
+{% block content %}
+          <div class="col-lg-12 h-auto">
+              <h3 class="text-black mb-5 border-bottom pb-2">Job Details</h3>
+
+
+              <div class="form-group">
+                  <img src="{{data.Logo.url}}" width="120px" height="120px" style="border-radius:50%;"><br>
+
+              </div><br>
+
+              <div class="row">
+                <div class="col-md-3">
+                <p><label>Company Name</label></div>
+                  <div class="col-md-9">
+                      {{data.Company_Name}}
+              </p></div></div>
+
+              <div class="row">
+                <div class="col-md-3">
+                <p><label>ID</label></div>
+                  <div class="col-md-9">
+                      {{data.JobID}}
+              </p></div></div>
+
+
+              <div class="row">
+                <div class="col-md-3">
+                <p><label>Email</label></div>
+                  <div class="col-md-9">
+                      {{data.Email}}
+              </p></div></div>
+
+              <div class="row">
+                <div class="col-md-3">
+                <p><label>Title</label></div>
+                  <div class="col-md-9">{{data.Title}}
+              </p></div></div>
+
+              <div class="row">
+                <div class="col-md-3">
+                <p><label>Location</label></div>
+                  <div class="col-md-9">
+                        {{data.Location}}
+                      </p></div></div>
+
+              <div class="row">
+                <div class="col-md-3">
+                <p><label>Qualification</label></div>
+                  <div class="col-md-9">
+                        {{data.Qualification}}
+                      </p></div></div>
+
+              <div class="row">
+                <div class="col-md-3">
+                <p><label>Experience</label></div>
+                  <div class="col-md-9 h-auto">
+                      {{data.Experience}}
+              </p></div></div>
+
+              <div class="row">
+                <div class="col-md-3">
+                <p><label>Type</label></div>
+                  <div class="col-md-9">
+                      {{data.Type}}
+              </p></div></div>
+
+              <div class="row">
+                <div class="col-md-3">
+                <p><label>Published</label></div>
+                  <div class="col-md-9">
+                        {{data.Published}}
+                      </p></div></div>
+
+              <div class="row">
+                <div class="col-md-3">
+                <p><label>Deadline</label></div>
+                  <div class="col-md-9">
+                        {{data.Deadline}}
+                      </p></div></div>
+
+              <div class="row">
+                <div class="col-md-3">
+                <p><label>Gender</label></div>
+                  <div class="col-md-9">
+                    {{data.Gender}}
+                      </p></div></div>
+
+              <div class="row">
+                <div class="col-md-3">
+                <p><label>Salary</label></div>
+                  <div class="col-md-9">
+                        {{data.Salary}}
+                      </p></div></div>
+
+              <div class="row">
+                <div class="col-md-3">
+                <p><label>Description</label></div>
+                  <div class="col-md-9">
+                        {{data.Description}}
+                      </p></div></div>
+
+              <div class="row">
+                <div class="col-md-3">
+                <p><label>Responsibilities</label></div>
+                  <div class="col-md-9">
+                      <ul>
+                          {% if resdata.res1 %}
+                      <li>{{resdata.res1}}</li>
+                          {% endif %}
+                          {% if resdata.res2 %}
+                      <li>{{resdata.res2}}</li>
+                          {% endif %}
+                          {% if resdata.res3 %}
+                      <li>{{resdata.res3}}</li>
+                          {% endif %}
+                          {% if resdata.res4 %}
+                      <li>{{resdata.res4}}</li>
+                          {% endif %}
+                          {% if resdata.res5 %}
+                      <li>{{resdata.res5}}</li>
+                          {% endif %}
+                          {% if resdata.res6 %}
+                      <li>{{resdata.res6}}</li>
+                          {% endif %}
+                          {% if resdata.res7 %}
+                      <li>{{resdata.res7}}</li>
+                          {% endif %}
+                          {% if resdata.res8 %}
+                      <li>{{resdata.res8}}</li>
+                          {% endif %}
+                          {% if resdata.res9 %}
+                      <li>{{resdata.res9}}</li>
+                          {% endif %}
+                          {% if resdata.res10 %}
+                      <li>{{resdata.res10}}</li>
+                          {% endif %}
+                          </ul>
+                      </p></div></div>
+
+
+              <div class="row">
+                <div class="col-md-3">
+                <p><label>Other Requirements</label></div>
+                  <div class="col-md-9">
+                      <ul>
+                          {% if reqdata.req1 %}
+                      <li>{{reqdata.req1}}</li>
+                          {% endif %}
+                          {% if reqdata.req2 %}
+                      <li>{{reqdata.req2}}</li>
+                          {% endif %}
+                          {% if reqdata.req3 %}
+                      <li>{{reqdata.req3}}</li>
+                          {% endif %}
+                          {% if reqdata.req4 %}
+                      <li>{{reqdata.req4}}</li>
+                          {% endif %}
+                          {% if reqdata.req5 %}
+                      <li>{{reqdata.req5}}</li>
+                          {% endif %}
+                          </ul>
+                      </p></div></div>
+
+              <div class="row">
+                <div class="col-md-3">
+                <p><label>Benefits</label></div>
+                  <div class="col-md-9">
+                      <ul>
+                          {% if bendata.ben1 %}
+                      <li>{{bendata.ben1}}</li>
+                          {% endif %}
+                          {% if bendata.ben2 %}
+                      <li>{{bendata.ben2}}</li>
+                          {% endif %}
+                          {% if bendata.ben3 %}
+                      <li>{{bendata.ben3}}</li>
+                          {% endif %}
+                          {% if bendata.ben4 %}
+                      <li>{{bendata.ben4}}</li>
+                          {% endif %}
+                          {% if bendata.ben5 %}
+                      <li>{{bendata.ben5}}</li>
+                          {% endif %}
+                          </ul>
+                      </p></div></div>
+
+
+                <form method="post" action="{% url 'jobunverify' jid=data.JobID %}">
+                    {% csrf_token %}
+              <div class="row">
+                <div class="col-md-3">
+                <p><label>Remarks </label></div>
+                  <div class="col-md-6">
+                      <textarea class="form-control bg-body-none" name="remarks" >{{data.Remarks}}</textarea>
+                      </p>
+                      <button class="btn btn-danger" type="submit">Post & Exit</button></div>
+                  </div>
+                </form>
+              <div style="width:100%;margin-top:100px;padding-bottom:100px;text-align:center;">
+                  <a class="btn btn-success" href="{% url 'jobverified' jid=data.JobID %}">Verify</a>
+              </div>
+
+          </div>
+
+<script src="{% static 'assets/js/jquerymessage.js' %}"></script>
+<script src="{% static 'assets/js/sweet.js' %}"></script>
+
+{% if messages %}
+    {% for i in messages %}
+        {% if i.tags == 'warning' %}
+            <script>
+                swal('{{i}}','','warning');
+            </script>
+        {% elif i.tags == 'error' %}
+            <script>
+                swal('{{i}}','','error');
+            </script>
+        {% else %}
+            <script>
+                swal('{{i}}','','success');
+            </script>
+        {% endif %}
+    {% endfor %}
+{% endif %}
+
+{% endblock %}
+</body>
+</html>

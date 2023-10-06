@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+{% extends 'adminhome.html' %}
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+  <link rel="icon" href="{% static 'icons/logo.ico' %}" type="image/x-icon"/>
+    <title>finder | Admin</title>
+</head>
+<body>
+{% block content %}
+<div class="table-responsive">
+                 <table class="table align-items-center table-hover" style="text-align:center;">
+                  <thead>
+                   <tr>
+                     <th>Name</th>
+                     <th>Email</th>
+                     <th>Subject</th>
+                     <th>View</th>
+                   </tr>
+                   </thead>
+                   <tbody>
+                   {% for j in data %}
+                   <tr>
+                    <td>{{j.Name}}</td>
+                    <td>{{j.Email}}</td>
+                    <td>{{j.Subject}}</td>
+                       <td><a href="{% url 'responsesingle' dataid=j.id %}"><button class="btn btn-primary">View</button></a></td>
+                   </tr>
+                   {% endfor %}
+
+
+                 </tbody></table>
+               </div>
+
+
+<script src="{% static 'assets/js/jquerymessage.js' %}"></script>
+<script src="{% static 'assets/js/sweet.js' %}"></script>
+
+{% if messages %}
+    {% for i in messages %}
+        {% if i.tags == 'warning' %}
+            <script>
+                swal('{{i}}','','warning');
+            </script>
+        {% elif i.tags == 'error' %}
+            <script>
+                swal('{{i}}','','error');
+            </script>
+        {% else %}
+            <script>
+                swal('{{i}}','','success');
+            </script>
+        {% endif %}
+    {% endfor %}
+{% endif %}
+
+{% endblock %}
+</body>
+</html>

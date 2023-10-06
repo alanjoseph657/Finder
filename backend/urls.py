@@ -1,0 +1,37 @@
+from django.urls import path
+from backend import views
+
+urlpatterns = [
+    path('adminhome/',views.adminhome,name="adminhome"),
+    path('adminlogin/',views.adminlogin,name="adminlogin"),
+    path('authenticate/',views.logauth,name="authenticate"),
+    path('adminlogout/',views.adminlogout,name="adminlogout"),
+    path('applicantverify/',views.applicantverify,name="applicantverify"),
+    path('applicantsingle/<int:id>/',views.applicantsingle,name="applicantsingle"),
+    path('applicantverified/<int:id>/',views.applicantverified,name="applicantverified"),
+    path('applicantslist/',views.applicantslist,name="applicantslist"),
+    path('applicantdelete/<int:aid>/',views.applicantdelete,name="applicantdelete"),
+    path('unverify/<int:id>/',views.unverify,name="unverify"),
+    path('contactmessages/',views.contactmessages,name="contactmessages"),
+    path('contactsingle/<int:dataid>/',views.contactsingle,name="contactsingle"),
+    path('contactresponse/<int:dataid>/',views.contactresponse,name="contactresponse"),
+    path('responselist/',views.responselist,name="responselist"),
+    path('responsesingle/<int:dataid>/',views.responsesingle,name="responsesingle"),
+    path('applicantslistsingle/<int:dataid>/',views.applicantslistsingle,name="applicantslistsingle"),
+    path('jobverifylist/', views.jobverifylist, name="jobverifylist"),
+    path('jobverifysingle/<int:id>/', views.jobverifysingle, name="jobverifysingle"),
+    path('jobverified/<int:jid>/', views.jobverified, name="jobverified"),
+    path('jobunverify/<int:jid>/', views.jobunverify, name="jobunverify"),
+    path('jobslist/', views.jobslist, name="jobslist"),
+    path('jobslistsingle/<int:jid>/', views.jobslistsingle, name="jobslistsingle"),
+    path('jobdelete/<int:jid>/', views.jobdelete, name="jobdelete"),
+    path('recruiterverifylist/', views.recruiterverifylist, name="recruiterverifylist"),
+    path('recruiterverifysingle/<int:rid>/', views.recruiterverifysingle, name="recruiterverifysingle"),
+    path('recruiterverify/<int:rid>/', views.recruiterverify, name="recruiterverify"),
+    path('recruiterunverify/<int:rid>/', views.recruiterunverify, name="recruiterunverify"),
+    path('recruiterslist/', views.recruiterslist, name="recruiterslist"),
+    path('recruiterslistsingle/<int:rid>/', views.recruiterslistsingle, name="recruiterslistsingle"),
+    path('recruitersprofiledelete/<int:rid>/', views.recruitersprofiledelete, name="recruitersprofiledelete"),
+    path('viewresume/<int:aid>/download/', views.viewresume, name="viewresume"),
+
+]

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+{% extends 'adminhome.html' %}
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="{% static 'icons/logo.ico' %}" type="image/x-icon"/>
+    <title>finder | Admin</title>
+</head>
+<body>
+{% block content %}
+          <div class="col-lg-12 h-auto">
+              <h3 class="text-black mb-5 border-bottom pb-2">Recruiter Details</h3>
+
+
+              <div class="form-group">
+                  <img src="{{data.Logo.url}}" width="120px" height="120px" style="border-radius:50%;"><br>
+
+              </div><br>
+
+              <div class="row">
+                <div class="col-md-3">
+                <p><label>Company Name</label></div>
+                  <div class="col-md-9">
+                      {{data.Name}}
+              </p></div></div>
+
+              <div class="row">
+                <div class="col-md-3">
+                <p><label>Email</label></div>
+                  <div class="col-md-9">
+                      {{data.Email}}
+              </p></div></div>
+
+              <div class="row">
+                <div class="col-md-3">
+                <p><label>Description</label></div>
+                  <div class="col-md-9">{{data.Description}}
+              </p></div></div>
+
+              <div class="row">
+                <div class="col-md-3">
+                <p><label>Location</label></div>
+                  <div class="col-md-9">
+                        {{data.Location}}
+                      </p></div></div>
+
+              <div class="row">
+                <div class="col-md-3">
+                <p><label>Contact</label></div>
+                  <div class="col-md-9">
+                        {{data.Contact}}
+                      </p></div></div>
+
+              <div class="row">
+                <div class="col-md-3">
+                <p><label>Registration Document</label></div>
+                  <div class="form-group">
+                  <img src="{{data.Doc1.url}}" width="500px" height="500px"><br>
+              </p></div></div>
+
+              <div class="row">
+                <div class="col-md-3">
+                <p><label>License Document</label></div>
+                  <div class="form-group">
+                  <img src="{{data.Doc2.url}}" width="500px" height="500px"><br>
+              </p></div></div>
+
+              <div class="row">
+                <div class="col-md-3">
+                <p><label>Tax Information</label></div>
+                  <div class="form-group">
+                  <img src="{{data.Doc3.url}}" width="500px" height="500px"><br>
+              </p></div></div>
+
+              <div class="row">
+                <div class="col-md-3">
+                <p><label>Remarks </label></div>
+                  <div class="col-md-6">
+                    {{data.Remarks}}                      </p>
+                  </div>
+                  </div>
+
+              <div style="width:100%;margin-top:100px;padding-bottom:100px;text-align:center;">
+                  <a class="btn btn-primary" href="{% url 'recruiterslist' %}">Close</a>
+              </div>
+
+          </div>
+
+<script src="{% static 'assets/js/jquerymessage.js' %}"></script>
+<script src="{% static 'assets/js/sweet.js' %}"></script>
+
+{% if messages %}
+    {% for i in messages %}
+        {% if i.tags == 'warning' %}
+            <script>
+                swal('{{i}}','','warning');
+            </script>
+        {% elif i.tags == 'error' %}
+            <script>
+                swal('{{i}}','','error');
+            </script>
+        {% else %}
+            <script>
+                swal('{{i}}','','success');
+            </script>
+        {% endif %}
+    {% endfor %}
+{% endif %}
+
+{% endblock %}
+</body>
+</html>

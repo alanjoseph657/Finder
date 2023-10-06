@@ -1,0 +1,495 @@
+
+
+<!doctype html>
+{% load static %}
+<html lang="en">
+  <head>
+<link rel="icon" href="{% static 'icons/logo.ico' %}" type="image/x-icon"/>
+    <title>finder | Find your Job</title>
+      <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+    <link rel="stylesheet" href="{% static 'css/custom-bs.css' %}">
+    <link rel="stylesheet" href="{% static 'css/jquery.fancybox.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap-select.min.css' %}">
+    <link rel="stylesheet" href="{% static 'fonts/icomoon/style.css' %}">
+    <link rel="stylesheet" href="{% static 'fonts/line-icons/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/animate.min.css' %}">
+
+    <!-- MAIN CSS -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  </head>
+  <body id="top">
+
+<!--  <div id="overlayer"></div>-->
+<!--  <div class="loader">-->
+<!--    <div class="spinner-border text-primary" role="status">-->
+<!--      <span class="sr-only">Loading...</span>-->
+<!--    </div>-->
+<!--  </div>-->
+
+
+<div class="site-wrap">
+
+    <div class="site-mobile-menu site-navbar-target">
+      <div class="site-mobile-menu-header">
+        <div class="site-mobile-menu-close mt-3">
+          <span class="icon-close2 js-menu-toggle"></span>
+        </div>
+      </div>
+      <div class="site-mobile-menu-body"></div>
+    </div> <!-- .site-mobile-menu -->
+
+
+    <!-- NAVBAR -->
+    <header class="site-navbar mt-3">
+      <div class="container-fluid">
+        <div class="row align-items-center">
+          <div class="site-logo col-6"><a href="{% url 'applicanthomepage' %}"><img src="{% static 'images/finderlogo2.png' %}"
+          width="160px" height="50px"></a></div>
+
+          <nav class="mx-auto site-navigation">
+            <ul class="site-menu js-clone-nav d-none d-xl-block ml-0 pl-0">
+              <li><a href="{% url 'recruiterhome' %}" class="nav-link">Home</a></li>
+              <li><a href="{% url 'recruiteraboutpage'%}">About</a></li>
+              <li>
+                <a href="{% url 'postedjobs' %}" class=" active">Jobs</a>
+              </li>
+<!--              <li class="has-children">-->
+<!--                <a href="services.html">Pages</a>-->
+<!--                <ul class="dropdown">-->
+<!--                  <li><a href="services.html">Services</a></li>-->
+<!--                  <li><a href="service-single.html">Service Single</a></li>-->
+<!--                  <li><a href="blog-single.html">Blog Single</a></li>-->
+<!--                  <li><a href="portfolio.html">Portfolio</a></li>-->
+<!--                  <li><a href="portfolio-single.html">Portfolio Single</a></li>-->
+<!--                  <li><a href="testimonials.html">Testimonials</a></li>-->
+<!--                  <li><a href="faq.html">Frequently Ask Questions</a></li>-->
+<!--                  <li><a href="gallery.html">Gallery</a></li>-->
+<!--                </ul>-->
+<!--              </li>-->
+                <li class="has-children">
+                <a href="{% url 'candidatelist' %}">Candidates</a>
+                <ul class="dropdown">
+                  <li><a href="{% url 'candidatelist' %}">All Candidates</a></li>
+                  <li><a href="{% url 'bookmarklist' %}">Bookmarks</a></li>
+                </ul>
+              </li>
+              <li><a href="{% url 'recruitercontactpage' %}">Contact</a></li>
+              <li class="d-lg-none"><a href="{% url 'postjob' %}"><span class="mr-2">+</span> Post a Job</a></li>
+              <li class="d-lg-none"><a href="{% url 'recruiterloginpage' %}">{{request.session.username}}</a></li>
+            </ul>
+          </nav>
+
+          <div class="right-cta-menu text-right d-flex aligin-items-center col-6">
+            {% if rdata %}
+            <div class="ml-auto">
+            <a href="{% url 'profilepage' rid=rdata.RecruiterID_id %}" class="btn btn-outline-white border-width-2 d-none d-lg-inline-block">{{rdata.Name}}</a>
+            <a href="{% url 'postjob' %}" class="btn btn-outline-white border-width-2 d-none d-lg-inline-block"><span class="mr-2 icon-add"></span>Post a Job</a>
+              <a href="{% url 'recruiterlogout' %}" class="btn btn-primary border-width-2 d-none d-lg-inline-block"><span class="mr-2 icon-lock_outline"></span>Logout</a>
+            </div>
+            {% elif request.session.username %}
+            <div class="ml-auto">
+              <a href="{% url 'recruiterprofile' %}" class="btn btn-outline-white border-width-2 d-none d-lg-inline-block">{{request.session.username}}</a>
+              <a href="{% url 'postjob' %}" class="btn btn-outline-white border-width-2 d-none d-lg-inline-block"><span class="mr-2 icon-add"></span>Post a Job</a>
+              <a href="{% url 'recruiterlogout' %}" class="btn btn-primary border-width-2 d-none d-lg-inline-block"><span class="mr-2 icon-lock_outline"></span>Logout</a>
+            </div>
+              {% else %}
+            <div class="ml-auto">
+              <a href="{% url 'recruiterloginpage' %}" class="btn btn-primary border-width-2 d-none d-lg-inline-block"><span class="mr-2 icon-lock_outline"></span>Log In</a>
+            </div>
+            {% endif %}
+          </div>
+
+        </div>
+      </div>
+    </header>
+
+    <!-- HOME -->
+    <section class="section-hero overlay inner-page bg-image" style="background-image: url('{% static 'images/hero_1.jpg' %}');" id="home-section">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-7">
+            <h1 class="text-white font-weight-bold">{{job.Title}}</h1>
+            <div class="custom-breadcrumbs">
+              <a href="#">Home</a> <span class="mx-2 slash">/</span>
+              <a href="#">Job</a> <span class="mx-2 slash">/</span>
+              <span class="text-white"><strong>{{job.Title}}</strong></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <section class="site-section">
+      <div class="container">
+        <div class="row align-items-center mb-5">
+          <div class="col-lg-8 mb-4 mb-lg-0">
+            <div class="d-flex align-items-center">
+              <div class="border p-2 d-inline-block mr-3 rounded">
+                <img src="{{job.Logo.url}}" alt="Image" width="150px" height="100px">
+              </div>
+              <div>
+                <h2>{{job.Title}}</h2>
+                <div>
+                  <span class="ml-0 mr-2 mb-2"><span class="icon-briefcase mr-2"></span>{{job.Company_Name}}</span>
+                  <span class="m-2"><span class="icon-room mr-2"></span>{{job.Location}}</span>
+                  <span class="m-2"><span class="icon-clock-o mr-2"></span><span class="text-primary">{{job.Type}}</span></span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="row">
+              {% if rdata.Remarks %}
+              {% if rdata.Remarks != "Updated" %}
+                {% if rdata.Remarks != "None" %}
+              <div class="col-3">
+                <button class="btn btn-block btn-light btn-md" onclick="launch_toast()"><span class="mr-2"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="22" fill="currentColor" class="bi bi-envelope" viewBox="0 0 16 16">
+                <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4Zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2Zm13 2.383-4.708 2.825L15 11.105V5.383Zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741ZM1 11.105l4.708-2.897L1 5.383v5.722Z"/>
+                </svg></span>
+
+                <span class="position-absolute top-0 start-90 translate-middle p-2 bg-danger border border-light rounded-circle" style="margin-top:-40px; margin-left:20px;"></span>
+
+                </button>
+
+                <div id="toast">
+                    <div id="img"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="22" fill="currentColor" class="bi bi-envelope" viewBox="0 0 16 16" style="margin-top:-15px;">
+                <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4Zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2Zm13 2.383-4.708 2.825L15 11.105V5.383Zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741ZM1 11.105l4.708-2.897L1 5.383v5.722Z"/>
+                </svg></div>
+                    <div id="desc" style="margin-top:-5px;">{{rdata.Remarks}}</div></div>
+              </div>
+
+
+                {% endif %}
+                {% endif %}
+                {% endif %}
+                {% if rdata.Status %}
+              <div class="col-6">
+                <button class="btn btn-block btn-info btn-md" type="button" disabled>{{rdata.Status}}</button>
+              </div>
+                {% endif    %}
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-8">
+            <div class="mb-5">
+              <figure class="mb-5"><img src="{% static 'images/job_single_img_1.jpg' %}" alt="Image" class="img-fluid rounded"></figure>
+              <h3 class="h5 d-flex align-items-center mb-4 text-primary"><span class="icon-align-left mr-3"></span>Job Description</h3>
+              <p>{{job.Description}}</p></div>
+            <div class="mb-5">
+              <h3 class="h5 d-flex align-items-center mb-4 text-primary"><span class="icon-rocket mr-3"></span>Responsibilities</h3>
+              <ul class="list-unstyled m-0 p-0">
+                {% if res.res1 %}
+                <li class="d-flex align-items-start mb-2"><span class="icon-check_circle mr-2 text-muted"></span><span>{{res.res1}}</span></li>
+                {% endif %}
+                {% if res.res2 %}
+                <li class="d-flex align-items-start mb-2"><span class="icon-check_circle mr-2 text-muted"></span><span>{{res.res2}}</span></li>
+                {% endif %}
+                {% if res.res3 %}
+                <li class="d-flex align-items-start mb-2"><span class="icon-check_circle mr-2 text-muted"></span><span>{{res.res3}}</span></li>
+                {% endif %}
+                {% if res.res4 %}
+                <li class="d-flex align-items-start mb-2"><span class="icon-check_circle mr-2 text-muted"></span><span>{{res.res4}}</span></li>
+                {% endif %}
+                {% if res.res5 %}
+                <li class="d-flex align-items-start mb-2"><span class="icon-check_circle mr-2 text-muted"></span><span>{{res.res5}}</span></li>
+                {% endif %}
+                {% if res.res6 %}
+                <li class="d-flex align-items-start mb-2"><span class="icon-check_circle mr-2 text-muted"></span><span>{{res.res6}}</span></li>
+                {% endif %}
+                {% if res.res7 %}
+                <li class="d-flex align-items-start mb-2"><span class="icon-check_circle mr-2 text-muted"></span><span>{{res.res7}}</span></li>
+                {% endif %}
+                {% if res.res8 %}
+                <li class="d-flex align-items-start mb-2"><span class="icon-check_circle mr-2 text-muted"></span><span>{{res.res8}}</span></li>
+                {% endif %}
+                {% if res.res9 %}
+                <li class="d-flex align-items-start mb-2"><span class="icon-check_circle mr-2 text-muted"></span><span>{{res.res9}}</span></li>
+                {% endif %}
+                {% if res.res10 %}
+                <li class="d-flex align-items-start mb-2"><span class="icon-check_circle mr-2 text-muted"></span><span>{{res.res10}}</span></li>
+                {% endif %}
+              </ul>
+
+            </div>
+
+            <div class="mb-5">
+              <h3 class="h5 d-flex align-items-center mb-4 text-primary"><span class="icon-book mr-3"></span>Qualification & Requirements</h3>
+              <ul class="list-unstyled m-0 p-0">
+                 <li class="d-flex align-items-start mb-2"><span class="icon-check_circle mr-2 text-muted"></span><span>{{job.Qualification}}</span></li>
+                {% if req.req1 %}
+                <li class="d-flex align-items-start mb-2"><span class="icon-check_circle mr-2 text-muted"></span><span>{{req.req1}}</span></li>
+                {% endif %}
+                {% if req.req2 %}
+                <li class="d-flex align-items-start mb-2"><span class="icon-check_circle mr-2 text-muted"></span><span>{{req.req2}}</span></li>
+                {% endif %}
+                {% if req.req3 %}
+                <li class="d-flex align-items-start mb-2"><span class="icon-check_circle mr-2 text-muted"></span><span>{{req.req3}}</span></li>
+                {% endif %}
+                {% if req.req4 %}
+                <li class="d-flex align-items-start mb-2"><span class="icon-check_circle mr-2 text-muted"></span><span>{{req.req4}}</span></li>
+                {% endif %}
+                {% if req.req5 %}
+                <li class="d-flex align-items-start mb-2"><span class="icon-check_circle mr-2 text-muted"></span><span>{{req.req5}}</span></li>
+                {% endif %}
+              </ul>
+            </div>
+
+            <div class="mb-5">
+              <h3 class="h5 d-flex align-items-center mb-4 text-primary"><span class="icon-turned_in mr-3"></span>Other Benifits</h3>
+              <ul class="list-unstyled m-0 p-0">
+                {% if ben.ben1 %}
+                <li class="d-flex align-items-start mb-2"><span class="icon-check_circle mr-2 text-muted"></span><span>{{ben.ben1}}</span></li>
+                {% endif %}
+                {% if ben.ben2 %}
+                <li class="d-flex align-items-start mb-2"><span class="icon-check_circle mr-2 text-muted"></span><span>{{ben.ben2}}</span></li>
+                {% endif %}
+                {% if ben.ben3 %}
+                <li class="d-flex align-items-start mb-2"><span class="icon-check_circle mr-2 text-muted"></span><span>{{ben.ben3}}</span></li>
+                {% endif %}
+                {% if ben.ben4 %}
+                <li class="d-flex align-items-start mb-2"><span class="icon-check_circle mr-2 text-muted"></span><span>{{ben.ben4}}</span></li>
+                {% endif %}
+                {% if ben.ben5 %}
+                <li class="d-flex align-items-start mb-2"><span class="icon-check_circle mr-2 text-muted"></span><span>{{ben.ben5}}</span></li>
+                {% endif %}
+              </ul>
+            </div>
+
+            <div class="row mb-5">
+
+              <div class="col-6">
+                {% if appcount == 0 %}
+                <button class="btn btn-block btn-danger btn-md">Applications <span class="position-absolute top-5 start-90 translate-middle p-2 bg-light rounded-square" style="margin-top:-8px; margin-left:20px;color:black;">{{appcount}}</span></button>
+                {% else %}
+                <a href="{% url 'applications' jid=job.JobID %}" class="btn btn-block btn-danger btn-md">Applications <span class="position-absolute top-5 start-90 translate-middle p-2 bg-light rounded-square" style="margin-top:-8px; margin-left:20px;color:black;">{{appcount}}</span></a>
+                {% endif %}
+              </div>
+                <div class="col-6">
+                  <button class="btn btn-block btn-primary btn-md" id="deldata">Delete Job</button>
+              </div>
+            </div>
+
+
+          </div>
+
+          <div class="col-lg-4">
+            <div class="bg-light p-3 border rounded mb-4">
+              <h3 class="text-primary  mt-3 h5 pl-3 mb-3 ">Job Summary</h3>
+              <ul class="list-unstyled pl-3 mb-0">
+                <li class="mb-2"><strong class="text-black">Published on:</strong>  {{job.Published}}</li>
+                <li class="mb-2"><strong class="text-black">Employment Status:</strong> {{job.Type}}</li>
+                <li class="mb-2"><strong class="text-black">Experience:</strong>
+                  {% if job.Experience %}
+                  {{job.Experience}}
+                  {% else %}
+                  NA
+                  {% endif %}
+                </li>
+                <li class="mb-2"><strong class="text-black">Job Location:</strong>  {{job.Location}}</li>
+                <li class="mb-2"><strong class="text-black">Salary:</strong>  {{job.Salary}}</li>
+                <li class="mb-2"><strong class="text-black">Gender:</strong>  {{job.Gender}}</li>
+                <li class="mb-2"><strong class="text-black">Application Deadline:</strong> {{job.Deadline}}</li>
+              </ul>
+            </div>
+
+            <div class="bg-light p-3 border rounded">
+              <h3 class="text-primary  mt-3 h5 pl-3 mb-3 ">Share</h3>
+              <div class="px-3">
+                <a href="#" class="pt-3 pb-3 pr-3 pl-0"><span class="icon-facebook"></span></a>
+                <a href="#" class="pt-3 pb-3 pr-3 pl-0"><span class="icon-twitter"></span></a>
+                <a href="#" class="pt-3 pb-3 pr-3 pl-0"><span class="icon-linkedin"></span></a>
+                <a href="#" class="pt-3 pb-3 pr-3 pl-0"><span class="icon-pinterest"></span></a>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+        <div style="text-align:center;" id="confirmdiv">
+                  <h4><svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-exclamation-circle" viewBox="0 0 16 16">
+                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                        <path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995z"/>
+                        </svg></h4>
+                  <h4>Are You Sure ? All Related Data Will Be Lost</h4>
+                  <button type="button" class="btn btn-lg btn-dark" data-dismiss="modal" id="cancel-delete">Cancel</button>
+                        <a href="{% url 'deletejob' jid=job.JobID %}" class="btn btn-lg btn-danger">Confirm</a>
+              </div>
+      </div>
+    </section>
+
+
+
+    <section class="bg-light pt-5 testimony-full">
+
+        <div class="owl-carousel single-carousel">
+
+
+          <div class="container">
+            <div class="row">
+              <div class="col-lg-6 align-self-center text-center text-lg-left">
+                <blockquote>
+                  <p>&ldquo;Embrace each rejection as a stepping stone on your path to success. Your dream job is waiting for you , and with determination, you'll find the perfect fit.&rdquo;</p>
+                  <p><cite> &mdash; Corey Woods, @Dribbble</cite></p>
+                </blockquote>
+              </div>
+              <div class="col-lg-6 align-self-end text-center text-lg-right">
+                <img src="{% static 'images/person_transparent_2.png' %}" alt="Image" class="img-fluid mb-0">
+              </div>
+            </div>
+          </div>
+
+          <div class="container">
+            <div class="row">
+              <div class="col-lg-6 align-self-center text-center text-lg-left">
+                <blockquote>
+                  <p>&ldquo;Your job search is not a race; it's a journey of self-discovery and growth. Keep moving forward and you'll find the perfect path to your career destination.&rdquo;</p>
+                  <p><cite> &mdash; Chris Peters, @Google</cite></p>
+                </blockquote>
+              </div>
+              <div class="col-lg-6 align-self-end text-center text-lg-right">
+                <img src="{% static 'images/person_transparent.png' %}" alt="Image" class="img-fluid mb-0">
+              </div>
+            </div>
+          </div>
+
+      </div>
+
+    </section>
+
+    <section class="pt-5 bg-image overlay-primary fixed overlay" style="background-image: url('{% static 'images/hero_1.jpg' %}');">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6 align-self-center text-center text-md-left mb-5 mb-md-0">
+            <h2 class="text-white">Get The Mobile Apps</h2>
+<p class="mb-5 lead text-white">Supercharge your job search with our mobile app!
+              <br>Find your dream job anytime, anywhere.</p>
+            <p class="mb-0">
+              <a href="#" class="btn btn-dark btn-md px-4 border-width-2"><span class="icon-apple mr-3"></span>App Store</a>
+              <a href="#" class="btn btn-dark btn-md px-4 border-width-2"><span class="icon-android mr-3"></span>Play Store</a>
+            </p>
+          </div>
+          <div class="col-md-6 ml-auto align-self-end">
+            <img src="{% static 'images/apps.png' %}" alt="Image" class="img-fluid">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="site-footer">
+
+      <a href="#top" class="smoothscroll scroll-top">
+        <span class="icon-keyboard_arrow_up"></span>
+      </a>
+
+      <div class="container">
+        <div class="row mb-5">
+          <div class="col-6 col-md-3 mb-4 mb-md-0">
+            <h3>Search Trending</h3>
+            <ul class="list-unstyled">
+              <li><a href="#">Web Design</a></li>
+              <li><a href="#">Graphic Design</a></li>
+              <li><a href="#">Web Developers</a></li>
+              <li><a href="#">Python</a></li>
+              <li><a href="#">HTML5</a></li>
+              <li><a href="#">CSS3</a></li>
+            </ul>
+          </div>
+          <div class="col-6 col-md-3 mb-4 mb-md-0">
+            <h3>Company</h3>
+            <ul class="list-unstyled">
+              <li><a href="#">About Us</a></li>
+              <li><a href="#">Career</a></li>
+              <li><a href="#">Blog</a></li>
+              <li><a href="#">Resources</a></li>
+            </ul>
+          </div>
+          <div class="col-6 col-md-3 mb-4 mb-md-0">
+            <h3>Support</h3>
+            <ul class="list-unstyled">
+              <li><a href="#">Support</a></li>
+              <li><a href="#">Privacy</a></li>
+              <li><a href="#">Terms of Service</a></li>
+            </ul>
+          </div>
+          <div class="col-6 col-md-3 mb-4 mb-md-0">
+            <h3>Contact Us</h3>
+            <div class="footer-social">
+              <a href="#"><span class="icon-facebook"></span></a>
+              <a href="#"><span class="icon-twitter"></span></a>
+              <a href="#"><span class="icon-instagram"></span></a>
+              <a href="#"><span class="icon-linkedin"></span></a>
+            </div>
+          </div>
+        </div>
+
+        <div class="row text-center">
+          <div class="col-12">
+            <p class="copyright"><small>
+              <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+            Copyright &copy;<script>document.write(new Date().getFullYear());</script>  <i  aria-hidden="true"><img src="{% static 'icons/logo.ico' %}" width="20px" height="20px"></i> <a href="#" target="_blank" >finder</a>
+            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></small></p>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+  </div>
+
+    <!-- SCRIPTS -->
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'js/isotope.pkgd.min.js' %}"></script>
+    <script src="{% static 'js/stickyfill.min.js' %}"></script>
+    <script src="{% static 'js/jquery.fancybox.min.js' %}"></script>
+    <script src="{% static 'js/jquery.easing.1.3.js' %}"></script>
+
+    <script src="{% static 'js/jquery.waypoints.min.js' %}"></script>
+    <script src="{% static 'js/jquery.animateNumber.min.js' %}"></script>
+    <script src="{% static 'js/owl.carousel.min.js' %}"></script>
+
+    <script src="{% static 'js/bootstrap-select.min.js' %}"></script>
+
+    <script src="{% static 'js/custom.js' %}"></script>
+    <script src="{% static 'js/self.js' %}"></script>
+<script src="{% static 'assets/js/jquerymessage.js' %}"></script>
+<script src="{% static 'assets/js/sweet.js' %}"></script>
+<script>
+
+        $(document).ready(function(){
+            $("#confirmdiv").hide()
+            $("#deldata").click(function(){
+                $("#confirmdiv").slideDown()
+            })
+            $("#cancel-delete").click(function(){
+                $("#confirmdiv").slideUp()
+            })
+         })
+    </script>
+
+{% if messages %}
+    {% for i in messages %}
+        {% if i.tags == 'warning' %}
+            <script>
+                swal('{{i}}','','warning');
+            </script>
+        {% elif i.tags == 'error' %}
+            <script>
+                swal('{{i}}','','error');
+            </script>
+        {% else %}
+            <script>
+                swal('{{i}}','','success');
+            </script>
+        {% endif %}
+    {% endfor %}
+{% endif %}
+
+
+  </body>
+</html>

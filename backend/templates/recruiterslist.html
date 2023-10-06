@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+{% extends 'adminhome.html' %}
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="{% static 'icons/logo.ico' %}" type="image/x-icon"/>
+    <title>finder | Admin</title>
+        <link href="{% static 'css/bootstrapexternal.css' %}" rel="stylesheet">
+
+</head>
+<body>
+{% block content %}
+<div class="table-responsive">
+<table class="table align-items-center table-hover" style="text-align:center;">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Company Logo</th>
+      <th scope="col">Company Name</th>
+      <th scope="col">Email</th>
+      <th scope="col">Remarks</th>
+      <th scope="col">Status</th>
+        <th></th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for i in data %}
+    <tr>
+      <th scope="row">{{forloop.counter}}</th>
+      <td><img src="{{i.Logo.url}}" width="80px" height="80px" style="border-radius:50%;"></td>
+      <td>{{i.Name}}</td>
+      <td>{{i.Email}}</td>
+      <td>{{i.Remarks}}</td>
+      <td>{{i.Status}}</td>
+      <td><a href="{% url 'recruiterslistsingle' rid=i.RecruiterID_id %}"><button class="btn btn-primary">View</button></a></td>
+        <td><button type="button"  data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-light"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                        <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6Z"/>
+                        <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1ZM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118ZM2.5 3h11V2h-11v1Z"/>
+        </svg></button></td>
+    </tr>
+                                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="text-align:center;">
+    <div class="modal-content" >
+
+      <div class="modal-body" style="color:black;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-exclamation-circle" viewBox="0 0 16 16">
+                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                        <path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995z"/>
+                        </svg><br><br>
+        <h4 style="color:black;">Are you sure ? All related data will be lost</h4>
+      </div>
+      <div class="modal-footer" style="text-align:center;">
+        <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Cancel</button>
+        <a href="{% url 'recruitersprofiledelete' rid=i.RecruiterID_id %}" class="btn btn-danger">Delete</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+  {% endfor %}
+  </tbody>
+</table>
+</div>
+<script src="{% static 'assets/js/bootstrapexternal.js' %}"></script>
+
+<script src="{% static 'assets/js/jquerymessage.js' %}"></script>
+<script src="{% static 'assets/js/sweet.js' %}"></script>
+
+{% if messages %}
+    {% for i in messages %}
+        {% if i.tags == 'warning' %}
+            <script>
+                swal('{{i}}','','warning');
+            </script>
+        {% elif i.tags == 'error' %}
+            <script>
+                swal('{{i}}','','error');
+            </script>
+        {% else %}
+            <script>
+                swal('{{i}}','','success');
+            </script>
+        {% endif %}
+    {% endfor %}
+{% endif %}
+
+{% endblock %}
+</body>
+</html>

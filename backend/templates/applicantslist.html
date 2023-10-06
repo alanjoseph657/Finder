@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+{% extends 'adminhome.html' %}
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+  <link rel="icon" href="{% static 'icons/logo.ico' %}" type="image/x-icon"/>
+    <title>finder | Admin</title>
+    <link href="{% static 'css/bootstrapexternal.css' %}" rel="stylesheet">
+</head>
+<body>
+{% block content %}
+<div class="table-responsive">
+                 <table class="table align-items-center table-hover" style="text-align:center;">
+                  <thead>
+                   <tr>
+                       <th>#</th>
+                     <th>Name</th>
+                     <th>Profile Photo</th>
+                     <th>Status</th>
+                     <th></th>
+                   </tr>
+                   </thead>
+                   <tbody>
+                   {% for j in data %}
+                   <tr>
+                       <td>{{forloop.counter}}</td>
+                    <td>{{j.Name}}</td>
+                    <td><img src="{{j.Image.url}}" width="80px" height="80px" style="border-radius:50%;"></td>
+
+                    <td>{{j.Status}}</td>
+                    <td><a href="{% url 'applicantslistsingle' dataid=j.ApplicantID %}"><button class="btn btn-primary">View</button></a></td>
+                    <td><a href="{% url 'applicantdelete' aid=j.ApplicantID%}" class="btn btn-light" id="option"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                        <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6Z"/>
+                        <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1ZM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118ZM2.5 3h11V2h-11v1Z"/>
+                        </svg></button>
+                        </td>
+                   </tr>
+                   {% endfor %}
+
+
+                 </tbody></table>
+               </div>
+
+
+<script src="{% static 'assets/js/bootstrapexternal.js' %}"></script>
+<script src="{% static 'assets/js/jquerymessage.js' %}"></script>
+<script src="{% static 'assets/js/sweet.js' %}"></script>
+
+{% if messages %}
+    {% for i in messages %}
+        {% if i.tags == 'warning' %}
+            <script>
+                swal('{{i}}','','warning');
+            </script>
+        {% elif i.tags == 'error' %}
+            <script>
+                swal('{{i}}','','error');
+            </script>
+        {% else %}
+            <script>
+                swal('{{i}}','','success');
+            </script>
+        {% endif %}
+    {% endfor %}
+{% endif %}
+
+{% endblock %}
+</body>
+</html>

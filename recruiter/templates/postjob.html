@@ -1,0 +1,561 @@
+
+<!doctype html>
+{% load static %}
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+     <link rel="icon" href="{% static 'icons/logo.ico' %}" type="image/x-icon"/>
+    <title>finder | Post a Job</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+    <link rel="stylesheet" href="{% static 'css/custom-bs.css' %}">
+    <link rel="stylesheet" href="{% static 'css/jquery.fancybox.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap-select.min.css' %}">
+    <link rel="stylesheet" href="{% static 'fonts/icomoon/style.css' %}">
+    <link rel="stylesheet" href="{% static 'fonts/line-icons/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/animate.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/quill.snow.css' %}">
+    <link rel="stylesheet" href="{% static 'css/self.css' %}" type="text/css">
+
+
+    <!-- MAIN CSS -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+
+    <!-- MAIN CSS -->
+    <link rel="stylesheet" href="css/style.css">
+  </head>
+  <body id="top">
+
+<!--  <div id="overlayer"></div>-->
+<!--  <div class="loader">-->
+<!--    <div class="spinner-border text-primary" role="status">-->
+<!--      <span class="sr-only">Loading...</span>-->
+<!--    </div>-->
+<!--  </div>-->
+
+
+<div class="site-wrap">
+
+    <div class="site-mobile-menu site-navbar-target">
+      <div class="site-mobile-menu-header">
+        <div class="site-mobile-menu-close mt-3">
+          <span class="icon-close2 js-menu-toggle"></span>
+        </div>
+      </div>
+      <div class="site-mobile-menu-body"></div>
+    </div> <!-- .site-mobile-menu -->
+
+
+    <!-- NAVBAR -->
+    <header class="site-navbar mt-3">
+      <div class="container-fluid">
+        <div class="row align-items-center">
+          <div class="site-logo col-6"><a href="{% url 'recruiterhome' %}"><img src="{% static 'images/finderlogo2.png' %}"
+          width="160px" height="50px"></a></div>
+
+          <nav class="mx-auto site-navigation">
+            <ul class="site-menu js-clone-nav d-none d-xl-block ml-0 pl-0">
+              <li><a href="{% url 'recruiterhome' %}" class="nav-link">Home</a></li>
+              <li><a href="{% url 'recruiteraboutpage'%}">About</a></li>
+              <li>
+                <a href="{% url 'postedjobs' %}" class="active">Jobs</a>
+              </li>
+<!--              <li class="has-children">-->
+<!--                <a href="services.html">Pages</a>-->
+<!--                <ul class="dropdown">-->
+<!--                  <li><a href="services.html">Services</a></li>-->
+<!--                  <li><a href="service-single.html">Service Single</a></li>-->
+<!--                  <li><a href="blog-single.html">Blog Single</a></li>-->
+<!--                  <li><a href="portfolio.html">Portfolio</a></li>-->
+<!--                  <li><a href="portfolio-single.html">Portfolio Single</a></li>-->
+<!--                  <li><a href="testimonials.html">Testimonials</a></li>-->
+<!--                  <li><a href="faq.html">Frequently Ask Questions</a></li>-->
+<!--                  <li><a href="gallery.html">Gallery</a></li>-->
+<!--                </ul>-->
+<!--              </li>-->
+                <li class="has-children">
+                <a href="{% url 'candidatelist' %}" >Candidates</a>
+                <ul class="dropdown">
+                  <li><a href="{% url 'candidatelist' %}">All Candidates</a></li>
+                  <li><a href="{% url 'bookmarklist' %}">Bookmarks</a></li>
+                </ul>
+              </li>
+              <li><a href="{% url 'recruitercontactpage' %}">Contact</a></li>
+              <li class="d-lg-none"><a href="{% url 'postjob' %}"><span class="mr-2">+</span> Post a Job</a></li>
+              <li class="d-lg-none"><a href="{% url 'recruiterloginpage' %}">{{request.session.username}}</a></li>
+            </ul>
+          </nav>
+
+          <div class="right-cta-menu text-right d-flex aligin-items-center col-6">
+            {% if data %}
+            <div class="ml-auto">
+            <a href="{% url 'profilepage' rid=data.RecruiterID %}" class="btn btn-outline-white border-width-2 d-none d-lg-inline-block">{{data.Name}}</a>
+            <a href="{% url 'postjob' %}" class="btn btn-outline-white border-width-2 d-none d-lg-inline-block"><span class="mr-2 icon-add"></span>Post a Job</a>
+              <a href="{% url 'recruiterlogout' %}" class="btn btn-primary border-width-2 d-none d-lg-inline-block"><span class="mr-2 icon-lock_outline"></span>Logout</a>
+            </div>
+            {% elif request.session.username %}
+            <div class="ml-auto">
+              <a href="{% url 'recruiterprofile' %}" class="btn btn-outline-white border-width-2 d-none d-lg-inline-block">{{request.session.username}}</a>
+              <a href="{% url 'postjob' %}" class="btn btn-outline-white border-width-2 d-none d-lg-inline-block"><span class="mr-2 icon-add"></span>Post a Job</a>
+              <a href="{% url 'recruiterlogout' %}" class="btn btn-primary border-width-2 d-none d-lg-inline-block"><span class="mr-2 icon-lock_outline"></span>Logout</a>
+            </div>
+              {% else %}
+            <div class="ml-auto">
+              <a href="{% url 'recruiterloginpage' %}" class="btn btn-primary border-width-2 d-none d-lg-inline-block"><span class="mr-2 icon-lock_outline"></span>Log In</a>
+            </div>
+            {% endif %}
+             </div>
+
+        </div>
+      </div>
+    </header>
+
+    <!-- HOME -->
+    <section class="section-hero overlay inner-page bg-image" style="background-image: url('{% static 'images/hero_1.jpg' %}');" id="home-section">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-7">
+            <h1 class="text-white font-weight-bold">Post A Job</h1>
+            <div class="custom-breadcrumbs">
+              <a href="{% url 'recruiterhome' %}">Home</a> <span class="mx-2 slash">/</span>
+              <a href="#">Job</a> <span class="mx-2 slash">/</span>
+              <span class="text-white"><strong>Post a Job</strong></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <section class="site-section">
+      <div class="container">
+
+        <div class="row align-items-center mb-5">
+          <div class="col-lg-8 mb-4 mb-lg-0">
+            <div class="d-flex align-items-center">
+              <div>
+                <h2>Post A Job</h2>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="row">
+              <div class="col-6" style="margin-left:170px;">
+                <a href="#" class="btn btn-block btn-primary btn-md">Save Job</a>
+              </div>
+            </div>
+          </div>
+        </div>
+                    <form class="p-4 p-md-5 border rounded" method="post" action="{% url 'savejob' %}">
+                      {% csrf_token%}
+        <div class="row mb-5">
+          <div class="col-lg-12">
+              <h3 class="text-black mb-5 border-bottom pb-2">Job Details</h3>
+
+              <div class="form-group">
+                <label for="company-name">Company Name</label>
+                <input type="text" class="form-control" id="company-name" value="{{data.Name}}" disabled name="cname">
+              </div>
+
+              <div class="form-group" hidden>
+                <label for="company-name">Recruiter ID</label>
+                <input type="text" class="form-control" value="{{data.RecruiterID}}" name="rid">
+              </div>
+
+              <div class="form-group">
+                <label for="email">Email</label>
+                <input type="text" class="form-control" id="email" value="{{data.Email}}" disabled>
+              </div>
+
+            <div class="form-group" hidden>
+                <label for="email">Email</label>
+                <input type="text" class="form-control" id="email" value="{{data.Email}}" name="email">
+              </div>
+
+              <div class="form-group">
+                <label for="job-title">Job Title</label>
+                <input type="text" class="form-control" id="job-title" placeholder="Product Designer" name="title">
+              </div>
+
+              <div class="form-group">
+                <label for="job-location">Location</label>
+                <input type="text" class="form-control" id="job-location" placeholder="e.g. New York" name="location">
+              </div>
+
+              <div class="form-group">
+                <label for="job-type">Job Type</label>
+                <select class="selectpicker border rounded" id="job-type" data-style="btn-black" data-width="100%" data-live-search="true" title="Select Job Type" name="type">
+                  <option>Part Time</option>
+                  <option>Full Time</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label>Deadline</label>
+                <input type="text" class="form-control" placeholder="YYYY-MM-DD" name="deadline">
+              </div>
+
+              <div class="form-group">
+                <label>Experience</label>
+                <input type="text" class="form-control" name="experience">
+              </div>
+
+              <div class="form-group">
+                <label>Gender</label>
+                <select class="selectpicker border rounded" id="job-type" data-style="btn-black" data-width="100%" data-live-search="true" title="Select Gender" name="gender">
+                  <option>Any</option>
+                  <option>Male</option>
+                  <option>Female</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label>Salary</label>
+                <input type="text" class="form-control" name="salary">
+              </div>
+
+              <div class="form-group">
+                <label>Qualification</label>
+                <input type="text" class="form-control" name="qualification">
+              </div>
+
+              <div class="form-group">
+                <label>Job Description</label>
+                <textarea class="form-control" name="description" style="height:250px;"></textarea>
+              </div>
+
+              <div class="form-group">
+                <label>Responsibilities</label>
+
+                <p><input type="text" class="form-control" name="res1"><span class="btn btn-lg" id="a1"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
+                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                </svg></span> </p>
+
+                <p id="res2"><input type="text" class="form-control" name="res2"><span class="btn btn-lg" id="a2"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
+                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                </svg></span></p>
+
+                <p id="res3"><input type="text" class="form-control" name="res3"><span class="btn btn-lg" id="a3"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
+                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                </svg></span></p>
+
+                <p id="res4"><input type="text" class="form-control" name="res4"><span class="btn btn-lg" id="a4"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
+                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                </svg></span></p>
+
+                <p id="res5"><input type="text" class="form-control" name="res5"><span class="btn btn-lg" id="a5"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
+                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                </svg></span></p>
+
+                <p id="res6"><input type="text" class="form-control" name="res6"><span class="btn btn-lg" id="a6"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
+                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                </svg></span></p>
+
+                <p id="res7"><input type="text" class="form-control" name="res7"><span class="btn btn-lg" id="a7"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
+                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                </svg></span></p>
+
+                <p id="res8"><input type="text" class="form-control" name="res8"><span class="btn btn-lg" id="a8"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
+                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                </svg></span></p>
+
+                <p id="res9"><input type="text" class="form-control" name="res9"><span class="btn btn-lg" id="a9"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
+                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                </svg></span></p>
+
+                <p id="res10"><input type="text" class="form-control" name="res10"></p>
+
+              </div>
+
+
+
+
+              <div class="form-group">
+                <label>Other Requirements</label>
+                <p><input type="text" class="form-control" name="req1"><span class="btn btn-lg" id="c1"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
+                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                </svg></span></p>
+
+                <p id="req2"><input type="text" class="form-control" name="req2"><span class="btn btn-lg" id="c2"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
+                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                </svg></span></p>
+
+                <p id="req3"><input type="text" class="form-control" name="req3"><span class="btn btn-lg" id="c3"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
+                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                </svg></span></p>
+
+                <p id="req4"><input type="text" class="form-control" name="req4"><span class="btn btn-lg" id="c4"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
+                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                </svg></span></p>
+
+                <p id="req5"><input type="text" class="form-control" name="req5"></p>
+              </div>
+
+
+
+
+
+            <div class="form-group">
+                <label>Benefits</label>
+                <p><input type="text" class="form-control" name="ben1"><span class="btn btn-lg" id="b1"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
+                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                </svg></span></p>
+
+                <p id="ben2"><input type="text" class="form-control" name="ben2"><span class="btn btn-lg" id="b2"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
+                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                </svg></span></p>
+
+                <p id="ben3"><input type="text" class="form-control" name="ben3"><span class="btn btn-lg" id="b3"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
+                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                </svg></span></p>
+
+                <p id="ben4"><input type="text" class="form-control" name="ben4"><span class="btn btn-lg" id="b4"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
+                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                </svg></span></p>
+
+                <p id="ben5"><input type="text" class="form-control" name="ben5"></p>
+              </div>
+
+
+
+          </div>
+
+
+        </div>
+        <div class="row align-items-center mb-5">
+
+          <div class="col-lg-4 ml-auto">
+            <div class="row">
+              <div class="col-6" style="margin-left:170px;">
+                <button type="submit" class="btn btn-block btn-primary btn-md" >Save Job</button>
+              </div>
+            </div>
+          </div>
+        </div></form>
+      </div>
+    </section>
+
+
+
+    <footer class="site-footer">
+
+      <a href="#top" class="smoothscroll scroll-top">
+        <span class="icon-keyboard_arrow_up"></span>
+      </a>
+
+      <div class="container">
+        <div class="row mb-5">
+          <div class="col-6 col-md-3 mb-4 mb-md-0">
+            <h3>Search Trending</h3>
+            <ul class="list-unstyled">
+              <li><a href="#">Web Design</a></li>
+              <li><a href="#">Graphic Design</a></li>
+              <li><a href="#">Web Developers</a></li>
+              <li><a href="#">Python</a></li>
+              <li><a href="#">HTML5</a></li>
+              <li><a href="#">CSS3</a></li>
+            </ul>
+          </div>
+          <div class="col-6 col-md-3 mb-4 mb-md-0">
+            <h3>Company</h3>
+            <ul class="list-unstyled">
+              <li><a href="#">About Us</a></li>
+              <li><a href="#">Career</a></li>
+              <li><a href="#">Blog</a></li>
+              <li><a href="#">Resources</a></li>
+            </ul>
+          </div>
+          <div class="col-6 col-md-3 mb-4 mb-md-0">
+            <h3>Support</h3>
+            <ul class="list-unstyled">
+              <li><a href="#">Support</a></li>
+              <li><a href="#">Privacy</a></li>
+              <li><a href="#">Terms of Service</a></li>
+            </ul>
+          </div>
+          <div class="col-6 col-md-3 mb-4 mb-md-0">
+            <h3>Contact Us</h3>
+            <div class="footer-social">
+              <a href="#"><span class="icon-facebook"></span></a>
+              <a href="#"><span class="icon-twitter"></span></a>
+              <a href="#"><span class="icon-instagram"></span></a>
+              <a href="#"><span class="icon-linkedin"></span></a>
+            </div>
+          </div>
+        </div>
+
+        <div class="row text-center">
+          <div class="col-12">
+            <p class="copyright"><small>
+              <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+            Copyright &copy;<script>document.write(new Date().getFullYear());</script>  <i  aria-hidden="true"><img src="{% static 'icons/logo.ico' %}" width="20px" height="20px"></i> <a href="#" target="_blank" >finder</a>
+            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></small></p>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+  </div>
+
+    <!-- SCRIPTS -->
+  <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'js/isotope.pkgd.min.js' %}"></script>
+    <script src="{% static 'js/stickyfill.min.js' %}"></script>
+    <script src="{% static 'js/jquery.fancybox.min.js' %}"></script>
+    <script src="{% static 'js/jquery.easing.1.3.js' %}"></script>
+
+    <script src="{% static 'js/jquery.waypoints.min.js' %}"></script>
+    <script src="{% static 'js/jquery.animateNumber.min.js' %}"></script>
+    <script src="{% static 'js/owl.carousel.min.js' %}"></script>
+    <script src="{% static 'js/quill.min.js' %}"></script>
+
+
+    <script src="{% static 'js/bootstrap-select.min.js' %}"></script>
+
+    <script src="{% static 'js/custom.js' %}"></script>
+    <script src="{% static 'js/self.js' %}"></script>
+
+
+    <script src="js/bootstrap-select.min.js"></script>
+
+    <script src="js/custom.js"></script>
+
+
+<script src="{% static 'js/jquerymessage.js' %}"></script>
+<script src="{% static 'js/sweet.js' %}"></script>
+
+ <script>
+        $(document).ready(function(){
+            $("#res2").hide()
+            $("#a1").click(function(){
+                $("#res2").slideDown()
+                $("#a1").hide()
+            })
+            $("#res3").hide()
+            $("#a2").click(function(){
+                $("#res3").slideDown()
+                $("#a2").hide()
+            })
+            $("#res4").hide()
+            $("#a3").click(function(){
+                $("#res4").slideDown()
+                $("#a3").hide()
+            })
+            $("#res5").hide()
+            $("#a4").click(function(){
+                $("#res5").slideDown()
+                $("#a4").hide()
+            })
+            $("#res6").hide()
+            $("#a5").click(function(){
+                $("#res6").slideDown()
+                $("#a5").hide()
+            })
+            $("#res7").hide()
+            $("#a6").click(function(){
+                $("#res7").slideDown()
+                $("#a6").hide()
+            })
+            $("#res8").hide()
+            $("#a7").click(function(){
+                $("#res8").slideDown()
+                $("#a7").hide()
+            })
+            $("#res9").hide()
+            $("#a8").click(function(){
+                $("#res9").slideDown()
+                $("#a8").hide()
+            })
+            $("#res10").hide()
+            $("#a9").click(function(){
+                $("#res10").slideDown()
+                $("#a9").hide()
+            })
+
+            $("#ben2").hide()
+            $("#b1").click(function(){
+                $("#ben2").slideDown()
+                $("#b1").hide()
+            })
+            $("#ben3").hide()
+            $("#b2").click(function(){
+                $("#ben3").slideDown()
+                $("#b2").hide()
+            })
+            $("#ben4").hide()
+            $("#b3").click(function(){
+                $("#ben4").slideDown()
+                $("#b3").hide()
+            })
+            $("#ben5").hide()
+            $("#b4").click(function(){
+                $("#ben5").slideDown()
+                $("#b4").hide()
+            })
+            $("#req2").hide()
+            $("#c1").click(function(){
+                $("#req2").slideDown()
+                $("#c1").hide()
+            })
+            $("#req3").hide()
+            $("#c2").click(function(){
+                $("#req3").slideDown()
+                $("#c2").hide()
+            })
+            $("#req4").hide()
+            $("#c3").click(function(){
+                $("#req4").slideDown()
+                $("#c3").hide()
+            })
+            $("#req5").hide()
+            $("#c4").click(function(){
+                $("#req5").slideDown()
+                $("#c4").hide()
+                })
+
+        })
+    </script>
+
+{% if messages %}
+    {% for i in messages %}
+        {% if i.tags == 'warning' %}
+            <script>
+                swal('{{i}}','','warning');
+            </script>
+        {% elif i.tags == 'error' %}
+            <script>
+                swal('{{i}}','','error');
+            </script>
+        {% else %}
+            <script>
+                swal('{{i}}','','success');
+            </script>
+        {% endif %}
+    {% endfor %}
+{% endif %}
+
+
+
+  </body>
+</html>
